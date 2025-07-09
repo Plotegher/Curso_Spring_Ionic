@@ -10,5 +10,4 @@ public class SpringIonicApplication {
 	{
 		SpringApplication.run(SpringIonicApplication.class, args);
 	}
-
 }
