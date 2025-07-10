@@ -4,14 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import vs.spring_ionic.entidades.Categoria;
-import vs.spring_ionic.entidades.Estado;
-import vs.spring_ionic.entidades.Municipio;
-import vs.spring_ionic.entidades.Produto;
-import vs.spring_ionic.repositorios.RepositorioCategoria;
-import vs.spring_ionic.repositorios.RepositorioEstado;
-import vs.spring_ionic.repositorios.RepositorioMunicipio;
-import vs.spring_ionic.repositorios.RepositorioProduto;
+import vs.spring_ionic.entidades.*;
+import vs.spring_ionic.repositorios.*;
 
 import java.util.Arrays;
 
@@ -26,6 +20,10 @@ public class SpringIonicApplication implements CommandLineRunner
 	private RepositorioEstado repositorioEstado;
 	@Autowired
 	private RepositorioMunicipio repositorioMunicipio;
+	@Autowired
+	private RepositorioCliente repositorioCliente;
+	@Autowired
+	private RepositorioEndereco repositorioEndereco;
 
 	public static void main(String[] args)
 	{
@@ -64,5 +62,20 @@ public class SpringIonicApplication implements CommandLineRunner
 
 		repositorioEstado.saveAll(Arrays.asList(est1, est2));
 		repositorioMunicipio.saveAll(Arrays.asList(mun1, mun2, mun3));
+
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@email.com",
+				"123.456.789-10", TipoCliente.FISICA);
+
+		cli1.getTelefones().addAll(Arrays.asList("98765-4321", "99887-7665"));
+
+		Endereco end1 = new Endereco(null, "Rua Flores", "300", "AP 203",
+				"Floresta", "38.204-054", cli1, mun1);
+		Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 801",
+				"Centro", "29.050-002", cli1, mun2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+
+		repositorioCliente.saveAll(Arrays.asList(cli1));
+		repositorioEndereco.saveAll(Arrays.asList(end1, end2));
 	}
 }
