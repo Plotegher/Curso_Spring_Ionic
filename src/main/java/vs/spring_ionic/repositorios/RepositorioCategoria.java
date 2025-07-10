@@ -5,7 +5,4 @@ import org.springframework.stereotype.Repository;
 import vs.spring_ionic.entidades.Categoria;
 
 @Repository
-public interface RepositorioCategoria extends JpaRepository<Categoria, Integer>
-{
-
-}
+public interface RepositorioCategoria extends JpaRepository<Categoria, Integer> {}
