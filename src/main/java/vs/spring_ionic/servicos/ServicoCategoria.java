@@ -1,6 +1,5 @@
 package vs.spring_ionic.servicos;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import vs.spring_ionic.entidades.Categoria;

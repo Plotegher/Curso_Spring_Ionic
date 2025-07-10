@@ -5,8 +5,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import vs.spring_ionic.entidades.Categoria;
+import vs.spring_ionic.entidades.Estado;
+import vs.spring_ionic.entidades.Municipio;
 import vs.spring_ionic.entidades.Produto;
 import vs.spring_ionic.repositorios.RepositorioCategoria;
+import vs.spring_ionic.repositorios.RepositorioEstado;
+import vs.spring_ionic.repositorios.RepositorioMunicipio;
 import vs.spring_ionic.repositorios.RepositorioProduto;
 
 import java.util.Arrays;
@@ -18,6 +22,10 @@ public class SpringIonicApplication implements CommandLineRunner
 	private RepositorioCategoria repositorioCategoria;
 	@Autowired
 	private RepositorioProduto repositorioProduto;
+	@Autowired
+	private RepositorioEstado repositorioEstado;
+	@Autowired
+	private RepositorioMunicipio repositorioMunicipio;
 
 	public static void main(String[] args)
 	{
@@ -43,5 +51,18 @@ public class SpringIonicApplication implements CommandLineRunner
 
 		repositorioCategoria.saveAll(Arrays.asList(cat1, cat2));
 		repositorioProduto.saveAll(Arrays.asList(prod1, prod2, prod3));
+
+		Estado est1 = new Estado(null, "Minas Gerais");
+		Estado est2 = new Estado(null, "Espírito Santo");
+
+		Municipio mun1 = new Municipio(null, "Uberlândia", est1);
+		Municipio mun2 = new Municipio(null, "Vitória", est2);
+		Municipio mun3 = new Municipio(null, "Vila Velha", est2);
+
+		est1.getMunicipios().addAll(Arrays.asList(mun1));
+		est2.getMunicipios().addAll(Arrays.asList(mun2, mun3));
+
+		repositorioEstado.saveAll(Arrays.asList(est1, est2));
+		repositorioMunicipio.saveAll(Arrays.asList(mun1, mun2, mun3));
 	}
 }
