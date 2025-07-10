@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -16,6 +17,7 @@ public class Produto implements Serializable
    private String nome;
    private Double preco;
 
+   @JsonBackReference
    @ManyToMany
 //   @JoinTable(name = "PRODUTO_CATEGORIA", joinColumns = @JoinColumn(name = "produto_id"),
 //         inverseJoinColumns = @JoinColumn(name = "categoria_id"));
