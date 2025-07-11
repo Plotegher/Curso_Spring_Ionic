@@ -1,15 +1,21 @@
 package vs.spring_ionic.entidades;
 
+import jakarta.persistence.*;
 import vs.spring_ionic.entidades.EstadoPagamento;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class Pagamento implements Serializable
 {
+   @Id
    private Integer id;
    private EstadoPagamento estado;
 
+   @OneToOne
+   @JoinColumn(name = "pedido_id")
+   @MapsId
    private Pedido pedido;
 
    public Pagamento() {}

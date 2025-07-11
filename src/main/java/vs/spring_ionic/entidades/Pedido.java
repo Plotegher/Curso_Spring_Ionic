@@ -1,14 +1,21 @@
 package vs.spring_ionic.entidades;
 
+import jakarta.persistence.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+@Entity
 public class Pedido implements Serializable
 {
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer id;
    private Date instante;
 
+   // Mapeamento bidirecional 1 para 1
+   @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
    private Pagamento pagamento;
    private Cliente cliente;
    private Endereco enderecoEntrega;
