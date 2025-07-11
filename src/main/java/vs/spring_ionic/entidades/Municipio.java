@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ public class Municipio implements Serializable
    private Integer id;
    private String nome;
 
+   @JsonManagedReference // Municipio deixa serializar Estados
    @ManyToOne
    @JoinColumn(name = "estado_id")
    private Estado estado;

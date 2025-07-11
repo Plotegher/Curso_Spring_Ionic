@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,11 +19,12 @@ public class Cliente implements Serializable
    // mas externamente, para o sistema ela expõem o objeto TipoCliente.
    private Integer tipoCliente;
 
+   @JsonManagedReference // Cliente pode serializar os seus endereços
    @OneToMany(mappedBy = "cliente")
    private List<Endereco> enderecos = new ArrayList<>();
    // Telefones foi implementado por uma coleção Set ao invés de criar uma classe.
    @ElementCollection
-   @CollectionTable(name = "telefone")
+   @CollectionTable(name = "TELEFONE")
    private Set<String> telefones = new HashSet<>();
 
    public Cliente() {}

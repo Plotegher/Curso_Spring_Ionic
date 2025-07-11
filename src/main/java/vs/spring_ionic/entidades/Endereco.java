@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -17,12 +18,15 @@ public class Endereco implements Serializable
    private String bairro;
    private String cep;
 
+   @JsonBackReference // Endereco não pode serializar o seu Cliente
    @ManyToOne
    @JoinColumn(name = "cliente_id")
    private Cliente cliente;
    @ManyToOne
    @JoinColumn(name = "cidade_id")
    private Municipio municipio;
+
+   public Endereco() {}
 
    public Endereco(Integer id, String logradouro, String numero, String complemento,
           String bairro, String cep, Cliente cliente, Municipio municipio)

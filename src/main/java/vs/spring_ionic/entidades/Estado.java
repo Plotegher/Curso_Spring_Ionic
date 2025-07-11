@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ public class Estado implements Serializable
    private Integer id;
    private String nome;
 
+   @JsonBackReference // // Estado não pode serializar o seu Municipio
    @OneToMany(mappedBy = "estado")
    private List<Municipio> municipios = new ArrayList<>();
 
