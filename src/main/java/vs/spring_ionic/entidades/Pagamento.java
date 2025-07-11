@@ -1,18 +1,19 @@
 package vs.spring_ionic.entidades;
 
 import jakarta.persistence.*;
-import vs.spring_ionic.entidades.EstadoPagamento;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Pagamento implements Serializable
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Pagamento implements Serializable
 {
    @Id
    private Integer id;
-   private EstadoPagamento estado;
+   private Integer estado;
 
+   // Mapeamento com herança
    @OneToOne
    @JoinColumn(name = "pedido_id")
    @MapsId
@@ -23,7 +24,7 @@ public class Pagamento implements Serializable
    public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido)
    {
       this.id = id;
-      this.estado = estado;
+      this.estado = estado.getCodigo();
       this.pedido = pedido;
    }
 
@@ -39,12 +40,12 @@ public class Pagamento implements Serializable
 
    public EstadoPagamento getEstado()
    {
-      return estado;
+      return EstadoPagamento.converteParaEnum(estado);
    }
 
    public void setEstado(EstadoPagamento estado)
    {
-      this.estado = estado;
+      this.estado = estado.getCodigo();
    }
 
    public Pedido getPedido()

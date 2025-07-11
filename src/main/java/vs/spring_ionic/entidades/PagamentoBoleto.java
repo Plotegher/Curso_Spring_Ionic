@@ -1,7 +1,10 @@
 package vs.spring_ionic.entidades;
 
+import jakarta.persistence.Entity;
+
 import java.util.Date;
 
+@Entity
 public class PagamentoBoleto extends Pagamento
 {
    private Date dataVencimento;

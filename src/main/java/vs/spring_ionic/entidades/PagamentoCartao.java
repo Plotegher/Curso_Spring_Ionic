@@ -1,5 +1,8 @@
 package vs.spring_ionic.entidades;
 
+import jakarta.persistence.Entity;
+
+@Entity
 public class PagamentoCartao extends Pagamento
 {
    private Integer numeroParcelas;

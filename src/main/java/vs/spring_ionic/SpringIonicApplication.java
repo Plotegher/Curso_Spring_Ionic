@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import vs.spring_ionic.entidades.*;
 import vs.spring_ionic.repositorios.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -24,6 +25,10 @@ public class SpringIonicApplication implements CommandLineRunner
 	private RepositorioCliente repositorioCliente;
 	@Autowired
 	private RepositorioEndereco repositorioEndereco;
+	@Autowired
+	private RepositorioPedido repositorioPedido;
+	@Autowired
+	private RepositorioPagamento repositorioPagamento;
 
 	public static void main(String[] args)
 	{
@@ -77,5 +82,21 @@ public class SpringIonicApplication implements CommandLineRunner
 
 		repositorioCliente.saveAll(Arrays.asList(cli1));
 		repositorioEndereco.saveAll(Arrays.asList(end1, end2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, end1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cli1, end2);
+
+		Pagamento pag1 = new PagamentoCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pag1);
+		Pagamento pag2 = new PagamentoBoleto(null, EstadoPagamento.PENDENTE,
+				ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPagamento(pag2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1, ped2));
+
+		repositorioPedido.saveAll(Arrays.asList(ped1, ped2));
+		repositorioPagamento.saveAll(Arrays.asList(pag1, pag2));
 	}
 }
