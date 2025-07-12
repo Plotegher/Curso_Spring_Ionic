@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Pedido implements Serializable
@@ -17,12 +19,16 @@ public class Pedido implements Serializable
    // Mapeamento bidirecional 1 para 1
    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
    private Pagamento pagamento;
+
    @ManyToOne
    @JoinColumn(name = "cliente_id")
    private Cliente cliente;
+
    @ManyToOne
    @JoinColumn(name = "endereco_entrega_id")
    private Endereco enderecoEntrega;
+
+   private Set<ItemPedido> itens = new HashSet<>();
 
    public Pedido() {}
 
@@ -82,6 +88,16 @@ public class Pedido implements Serializable
    public void setEnderecoEntrega(Endereco enderecoEntrega)
    {
       this.enderecoEntrega = enderecoEntrega;
+   }
+
+   public Set<ItemPedido> getItens()
+   {
+      return itens;
+   }
+
+   public void setItens(Set<ItemPedido> itens)
+   {
+      this.itens = itens;
    }
 
    @Override
