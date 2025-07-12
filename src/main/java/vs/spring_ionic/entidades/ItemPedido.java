@@ -1,10 +1,15 @@
 package vs.spring_ionic.entidades;
 
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+
 import java.io.Serializable;
 import java.util.Objects;
 
+@Entity
 public class ItemPedido implements Serializable
 {
+   @EmbeddedId
    private ItemPedidoPK id = new ItemPedidoPK();
 
    private Double desconto;

@@ -29,6 +29,8 @@ public class SpringIonicApplication implements CommandLineRunner
 	private RepositorioPedido repositorioPedido;
 	@Autowired
 	private RepositorioPagamento repositorioPagamento;
+	@Autowired
+	private RepositorioItemPedido repositorioItemPedido;
 
 	public static void main(String[] args)
 	{
@@ -98,5 +100,18 @@ public class SpringIonicApplication implements CommandLineRunner
 
 		repositorioPedido.saveAll(Arrays.asList(ped1, ped2));
 		repositorioPagamento.saveAll(Arrays.asList(pag1, pag2));
+
+		ItemPedido itp1 = new ItemPedido(ped1, prod1, 0.0, 1, 2000.0);
+		ItemPedido itp2 = new ItemPedido(ped1, prod3, 0.0, 2, 80.0);
+		ItemPedido itp3 = new ItemPedido(ped2, prod2, 100.0, 1, 800.0);
+
+		ped1.getItens().addAll(Arrays.asList(itp1, itp2));
+		ped2.getItens().addAll(Arrays.asList(itp3));
+
+		prod1.getItens().addAll(Arrays.asList(itp1));
+		prod2.getItens().addAll(Arrays.asList(itp3));
+		prod3.getItens().addAll(Arrays.asList(itp2));
+
+		repositorioItemPedido.saveAll(Arrays.asList(itp1, itp2, itp3));
 	}
 }
