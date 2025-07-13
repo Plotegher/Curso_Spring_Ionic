@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,6 +15,7 @@ public abstract class Pagamento implements Serializable
    private Integer estado;
 
    // Mapeamento com herança
+   @JsonBackReference // O pedido de um pagamento não será serializado
    @OneToOne
    @JoinColumn(name = "pedido_id")
    @MapsId

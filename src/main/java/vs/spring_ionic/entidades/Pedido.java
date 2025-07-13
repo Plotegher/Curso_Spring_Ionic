@@ -1,5 +1,7 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -14,12 +16,15 @@ public class Pedido implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer id;
+   @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
    private Date instante;
 
    // Mapeamento bidirecional 1 para 1
+   @JsonManagedReference // Pedido pode serializar os seus pagamentos
    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
    private Pagamento pagamento;
 
+   @JsonManagedReference // Cliente pode serializar os seus pedidos
    @ManyToOne
    @JoinColumn(name = "cliente_id")
    private Cliente cliente;
@@ -28,6 +33,7 @@ public class Pedido implements Serializable
    @JoinColumn(name = "endereco_entrega_id")
    private Endereco enderecoEntrega;
 
+   // Os itens serão serializados porque são uma coleção
    @OneToMany(mappedBy = "id.pedido")
    private Set<ItemPedido> itens = new HashSet<>();
 

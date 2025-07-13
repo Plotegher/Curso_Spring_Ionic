@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
@@ -67,6 +68,7 @@ public class ItemPedido implements Serializable
       this.preco = preco;
    }
 
+   @JsonIgnore
    public Pedido getPedido()
    {
       return id.getPedido();

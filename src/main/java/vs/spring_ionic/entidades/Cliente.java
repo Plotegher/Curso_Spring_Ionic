@@ -1,5 +1,6 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -22,10 +23,13 @@ public class Cliente implements Serializable
    @JsonManagedReference // Cliente pode serializar os seus endereços
    @OneToMany(mappedBy = "cliente")
    private List<Endereco> enderecos = new ArrayList<>();
+
    // Telefones foi implementado por uma coleção Set ao invés de criar uma classe.
    @ElementCollection
    @CollectionTable(name = "TELEFONE")
    private Set<String> telefones = new HashSet<>();
+
+   @JsonBackReference // Os pedidos de um cliente não serão serializados
    @OneToMany(mappedBy = "cliente")
    private List<Pedido> pedidos = new ArrayList<>();
 

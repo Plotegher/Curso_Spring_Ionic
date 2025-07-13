@@ -1,5 +1,7 @@
 package vs.spring_ionic.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -7,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Objects;
 
+@JsonIgnoreType
 @Embeddable
 public class ItemPedidoPK implements Serializable
 {
