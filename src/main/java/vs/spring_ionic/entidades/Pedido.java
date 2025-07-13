@@ -1,7 +1,6 @@
 package vs.spring_ionic.entidades;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -20,11 +19,9 @@ public class Pedido implements Serializable
    private Date instante;
 
    // Mapeamento bidirecional 1 para 1
-   @JsonManagedReference // Pedido pode serializar os seus pagamentos
    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
    private Pagamento pagamento;
 
-   @JsonManagedReference // Cliente pode serializar os seus pedidos
    @ManyToOne
    @JoinColumn(name = "cliente_id")
    private Cliente cliente;

@@ -1,6 +1,5 @@
 package vs.spring_ionic.entidades;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
