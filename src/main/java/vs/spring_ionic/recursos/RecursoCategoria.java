@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import vs.spring_ionic.dto.DtoCategoria;
 import vs.spring_ionic.entidades.Categoria;
 import vs.spring_ionic.servicos.ServicoCategoria;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -22,6 +24,15 @@ public class RecursoCategoria
    {
       Categoria obj = servico.buscar(id);
       return ResponseEntity.ok().body(obj);
+   }
+
+   // Buscar todas as categorias
+   @RequestMapping(method = RequestMethod.GET)
+   public ResponseEntity<List<DtoCategoria>> buscarTudo()
+   {
+      List<Categoria> lista = servico.buscarTudo();
+      List<DtoCategoria> listaDto = lista.stream().map(DtoCategoria::new).toList();
+      return ResponseEntity.ok().body(listaDto);
    }
 
    // Incluir uma categoria

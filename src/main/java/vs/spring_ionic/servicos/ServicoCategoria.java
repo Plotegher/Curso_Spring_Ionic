@@ -8,6 +8,7 @@ import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
 import vs.spring_ionic.repositorios.RepositorioCategoria;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,6 +22,11 @@ public class ServicoCategoria
       Optional<Categoria> obj = repositorio.findById(id);
       return obj.orElseThrow(() -> new ExcecaoObjectNotFound
             ("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
+   }
+
+   public List<Categoria> buscarTudo()
+   {
+      return repositorio.findAll();
    }
 
    public Categoria incluir(Categoria obj)
