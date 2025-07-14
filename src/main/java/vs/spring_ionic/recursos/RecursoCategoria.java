@@ -34,11 +34,20 @@ public class RecursoCategoria
       return ResponseEntity.created(uri).build();
    }
 
+   // Atualizar uma categoria
    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
    public ResponseEntity<Void> atualizar(@RequestBody Categoria obj, @PathVariable Integer id)
    {
       obj.setId(id);
       obj = servico.atualizar(obj);
+      return ResponseEntity.noContent().build();
+   }
+
+   // Excluir uma categoria
+   @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+   public ResponseEntity<Void> excluir(@PathVariable Integer id)
+   {
+      servico.excluir(id);
       return ResponseEntity.noContent().build();
    }
 }

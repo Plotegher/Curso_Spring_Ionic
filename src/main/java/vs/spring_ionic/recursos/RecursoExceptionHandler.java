@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
 
 @ControllerAdvice
@@ -16,5 +17,13 @@ public class RecursoExceptionHandler
       ErroPadrao erro = new ErroPadrao(HttpStatus.NOT_FOUND.value(), excecao.getMessage(),
             System.currentTimeMillis());
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+   }
+
+   @ExceptionHandler(ExcecaoDataIntegrity.class)
+   public ResponseEntity<ErroPadrao> dataIntegrity(ExcecaoDataIntegrity excecao, HttpServletRequest request)
+   {
+      ErroPadrao erro = new ErroPadrao(HttpStatus.BAD_REQUEST.value(), excecao.getMessage(),
+            System.currentTimeMillis());
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
    }
 }
