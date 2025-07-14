@@ -26,4 +26,10 @@ public class ServicoCategoria
       obj.setId(null);
       return repositorio.save(obj);
    }
+
+   public Categoria atualizar(Categoria obj)
+   {
+      buscar(obj.getId());
+      return repositorio.save(obj);
+   }
 }

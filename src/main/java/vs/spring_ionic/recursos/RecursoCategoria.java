@@ -18,7 +18,7 @@ public class RecursoCategoria
 
    // Buscar uma categoria
    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-   public ResponseEntity<?> buscar(@PathVariable Integer id)
+   public ResponseEntity<Categoria> buscar(@PathVariable Integer id)
    {
       Categoria obj = servico.buscar(id);
       return ResponseEntity.ok().body(obj);
@@ -32,5 +32,13 @@ public class RecursoCategoria
       URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(obj.getId()).toUri();
       return ResponseEntity.created(uri).build();
+   }
+
+   @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+   public ResponseEntity<Void> atualizar(@RequestBody Categoria obj, @PathVariable Integer id)
+   {
+      obj.setId(id);
+      obj = servico.atualizar(obj);
+      return ResponseEntity.noContent().build();
    }
 }
