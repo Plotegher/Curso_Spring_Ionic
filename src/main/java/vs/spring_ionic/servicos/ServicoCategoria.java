@@ -2,6 +2,9 @@ package vs.spring_ionic.servicos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vs.spring_ionic.entidades.Categoria;
 import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
@@ -27,6 +30,13 @@ public class ServicoCategoria
    public List<Categoria> buscarTudo()
    {
       return repositorio.findAll();
+   }
+
+   public Page<Categoria> buscarPagina(Integer pagina, Integer linhasPorPagina,
+                                       String direcao, String ordenadoPor)
+   {
+      PageRequest pageRequest = PageRequest.of(pagina, linhasPorPagina, Sort.Direction.valueOf(direcao), ordenadoPor);
+      return repositorio.findAll(pageRequest);
    }
 
    public Categoria incluir(Categoria obj)

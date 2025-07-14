@@ -42,20 +42,25 @@ public class SpringIonicApplication implements CommandLineRunner
 	{
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
+		Categoria cat3 = new Categoria(null, "Utilidades");
+		Categoria cat4 = new Categoria(null, "Ferramentas");
+		Categoria cat5 = new Categoria(null, "Eletrodomésticos");
+		Categoria cat6 = new Categoria(null, "Móveis");
+		Categoria cat7 = new Categoria(null, "Celulares");
 
-		Produto prod1 = new Produto(null, "Computador", 2000.0);
-		Produto prod2 = new Produto(null, "Impressora", 800.0);
-		Produto prod3 = new Produto(null, "Mouse", 80.0);
+		Produto pro1 = new Produto(null, "Computador", 2000.0);
+		Produto pro2 = new Produto(null, "Impressora", 800.0);
+		Produto pro3 = new Produto(null, "Mouse", 80.0);
 
-		cat1.getProdutos().addAll(Arrays.asList(prod1, prod2, prod3));
-		cat2.getProdutos().addAll(Arrays.asList(prod2));
+		cat1.getProdutos().addAll(Arrays.asList(pro1, pro2, pro3));
+		cat2.getProdutos().addAll(Arrays.asList(pro2));
 
-		prod1.getCategorias().addAll(Arrays.asList(cat1));
-		prod2.getCategorias().addAll(Arrays.asList(cat1, cat2));
-		prod3.getCategorias().addAll(Arrays.asList(cat1));
+		pro1.getCategorias().addAll(Arrays.asList(cat1));
+		pro2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		pro3.getCategorias().addAll(Arrays.asList(cat1));
 
-		repositorioCategoria.saveAll(Arrays.asList(cat1, cat2));
-		repositorioProduto.saveAll(Arrays.asList(prod1, prod2, prod3));
+		repositorioCategoria.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
+		repositorioProduto.saveAll(Arrays.asList(pro1, pro2, pro3));
 
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "Espírito Santo");
@@ -101,16 +106,16 @@ public class SpringIonicApplication implements CommandLineRunner
 		repositorioPedido.saveAll(Arrays.asList(ped1, ped2));
 		repositorioPagamento.saveAll(Arrays.asList(pag1, pag2));
 
-		ItemPedido itp1 = new ItemPedido(ped1, prod1, 0.0, 1, 2000.0);
-		ItemPedido itp2 = new ItemPedido(ped1, prod3, 0.0, 2, 80.0);
-		ItemPedido itp3 = new ItemPedido(ped2, prod2, 100.0, 1, 800.0);
+		ItemPedido itp1 = new ItemPedido(ped1, pro1, 0.0, 1, 2000.0);
+		ItemPedido itp2 = new ItemPedido(ped1, pro3, 0.0, 2, 80.0);
+		ItemPedido itp3 = new ItemPedido(ped2, pro2, 100.0, 1, 800.0);
 
 		ped1.getItens().addAll(Arrays.asList(itp1, itp2));
 		ped2.getItens().addAll(Arrays.asList(itp3));
 
-		prod1.getItens().addAll(Arrays.asList(itp1));
-		prod2.getItens().addAll(Arrays.asList(itp3));
-		prod3.getItens().addAll(Arrays.asList(itp2));
+		pro1.getItens().addAll(Arrays.asList(itp1));
+		pro2.getItens().addAll(Arrays.asList(itp3));
+		pro3.getItens().addAll(Arrays.asList(itp2));
 
 		repositorioItemPedido.saveAll(Arrays.asList(itp1, itp2, itp3));
 	}

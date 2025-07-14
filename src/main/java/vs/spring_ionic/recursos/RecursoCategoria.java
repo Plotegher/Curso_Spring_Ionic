@@ -1,6 +1,8 @@
 package vs.spring_ionic.recursos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,6 +34,19 @@ public class RecursoCategoria
    {
       List<Categoria> lista = servico.buscarTudo();
       List<DtoCategoria> listaDto = lista.stream().map(DtoCategoria::new).toList();
+      return ResponseEntity.ok().body(listaDto);
+   }
+
+   // Buscar categorias por página
+   @RequestMapping(value = "/pagina", method = RequestMethod.GET)
+   public ResponseEntity<Page<DtoCategoria>> buscarPagina
+         (@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
+          @RequestParam(value = "linhasPorPagina", defaultValue = "24")Integer linhasPorPagina,
+          @RequestParam(value = "direcao", defaultValue = "ASC")String direcao,
+          @RequestParam(value = "ordenadoPor", defaultValue = "nome")String ordenadoPor)
+   {
+      Page<Categoria> lista = servico.buscarPagina(pagina, linhasPorPagina, direcao, ordenadoPor);
+      Page<DtoCategoria> listaDto = lista.map(DtoCategoria::new);
       return ResponseEntity.ok().body(listaDto);
    }
 
