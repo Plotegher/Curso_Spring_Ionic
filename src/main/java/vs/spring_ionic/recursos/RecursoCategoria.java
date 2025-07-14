@@ -2,12 +2,12 @@ package vs.spring_ionic.recursos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vs.spring_ionic.entidades.Categoria;
 import vs.spring_ionic.servicos.ServicoCategoria;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -16,10 +16,21 @@ public class RecursoCategoria
    @Autowired
    private ServicoCategoria servico;
 
+   // Buscar uma categoria
    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
    public ResponseEntity<?> buscar(@PathVariable Integer id)
    {
       Categoria obj = servico.buscar(id);
       return ResponseEntity.ok().body(obj);
+   }
+
+   // Incluir uma categoria
+   @RequestMapping(method = RequestMethod.POST)
+   public ResponseEntity<Void> incluir(@RequestBody Categoria obj)
+   {
+      obj = servico.incluir(obj);
+      URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+            .buildAndExpand(obj.getId()).toUri();
+      return ResponseEntity.created(uri).build();
    }
 }

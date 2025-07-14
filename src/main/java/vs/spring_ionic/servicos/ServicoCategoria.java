@@ -20,4 +20,10 @@ public class ServicoCategoria
       return obj.orElseThrow(() -> new ExcecaoObjectNotFound
             ("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
    }
+
+   public Categoria incluir(Categoria obj)
+   {
+      obj.setId(null);
+      return repositorio.save(obj);
+   }
 }
