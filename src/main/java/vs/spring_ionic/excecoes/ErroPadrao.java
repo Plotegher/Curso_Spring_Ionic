@@ -1,4 +1,4 @@
-package vs.spring_ionic.recursos;
+package vs.spring_ionic.excecoes;
 
 import java.io.Serializable;
 
