@@ -69,9 +69,7 @@ public class ServicoCategoria
       catch (DataIntegrityViolationException e)
       {
          throw new ExcecaoDataIntegrity
-               ("Não é possível excluir uma categoria que possui produtos associados!");
+               ("Não é possível excluir uma categoria que possui produto(s) associado(s)!");
       }
    }
-
-
 }
