@@ -1,5 +1,6 @@
 package vs.spring_ionic.recursos;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -52,8 +53,9 @@ public class RecursoCategoria
 
    // Incluir uma categoria
    @RequestMapping(method = RequestMethod.POST)
-   public ResponseEntity<Void> incluir(@RequestBody Categoria obj)
+   public ResponseEntity<Void> incluir(@Valid @RequestBody DtoCategoria objDto)
    {
+      Categoria obj = servico.origemDto(objDto);
       obj = servico.incluir(obj);
       URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
             .buildAndExpand(obj.getId()).toUri();
@@ -62,8 +64,9 @@ public class RecursoCategoria
 
    // Atualizar uma categoria
    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-   public ResponseEntity<Void> atualizar(@RequestBody Categoria obj, @PathVariable Integer id)
+   public ResponseEntity<Void> atualizar(@Valid @RequestBody DtoCategoria objDto, @PathVariable Integer id)
    {
+      Categoria obj = servico.origemDto(objDto);
       obj.setId(id);
       obj = servico.atualizar(obj);
       return ResponseEntity.noContent().build();

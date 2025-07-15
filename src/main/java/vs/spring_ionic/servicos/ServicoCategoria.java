@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import vs.spring_ionic.dto.DtoCategoria;
 import vs.spring_ionic.entidades.Categoria;
 import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
@@ -39,6 +40,13 @@ public class ServicoCategoria
       return repositorio.findAll(pageRequest);
    }
 
+   // Método auxiliar para converter um objeto DtoCategoria em
+   // um objeto Categoria
+   public Categoria origemDto(DtoCategoria objDto)
+   {
+      return new Categoria(objDto.getId(), objDto.getNome());
+   }
+
    public Categoria incluir(Categoria obj)
    {
       obj.setId(null);
@@ -64,4 +72,6 @@ public class ServicoCategoria
                ("Não é possível excluir uma categoria que possui produtos associados!");
       }
    }
+
+
 }
