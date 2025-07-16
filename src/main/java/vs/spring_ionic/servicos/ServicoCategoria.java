@@ -53,10 +53,18 @@ public class ServicoCategoria
       return repositorio.save(obj);
    }
 
+   // Método auxiliar para atualizar os dados de um novo objeto (novoObj)
+   // buscado no BD, com base no objeto que veio como argumento (obj)
+   private void atualizaDados(Categoria novoObj, Categoria obj)
+   {
+      novoObj.setNome(obj.getNome());
+   }
+
    public Categoria atualizar(Categoria obj)
    {
-      buscar(obj.getId());
-      return repositorio.save(obj);
+      Categoria novoObj = buscar(obj.getId());
+      atualizaDados(novoObj, obj);
+      return repositorio.save(novoObj);
    }
 
    public void excluir(Integer id)
