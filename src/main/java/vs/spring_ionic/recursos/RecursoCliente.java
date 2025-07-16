@@ -5,10 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vs.spring_ionic.dto.DtoCliente;
+import vs.spring_ionic.dto.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.servicos.ServicoCliente;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -19,7 +22,6 @@ public class RecursoCliente
    private ServicoCliente servico;
 
    // Buscar um cliente
-
    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
    public ResponseEntity<Cliente> buscar(@PathVariable Integer id)
    {
@@ -36,7 +38,7 @@ public class RecursoCliente
       return ResponseEntity.ok().body(listaDto);
    }
 
-   // Buscar categorias por página
+   // Buscar clientes por página
    @RequestMapping(value = "/pagina", method = RequestMethod.GET)
    public ResponseEntity<Page<DtoCliente>> buscarPagina
    (@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
@@ -50,6 +52,14 @@ public class RecursoCliente
    }
 
    // Incluir um cliente
+   @RequestMapping(method=RequestMethod.POST)
+   public ResponseEntity<Void> incluir(@Valid @RequestBody DtoClienteNovo objDto) {
+      Cliente obj = servico.origemDto(objDto);
+      obj = servico.insert(obj);
+      URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}").buildAndExpand(obj.getId()).toUri();
+      return ResponseEntity.created(uri).build();
+   }
 
    // Atualizar um cliente
    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)

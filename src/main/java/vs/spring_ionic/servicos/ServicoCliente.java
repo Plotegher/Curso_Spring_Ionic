@@ -1,5 +1,6 @@
 package vs.spring_ionic.servicos;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -7,10 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import vs.spring_ionic.dto.DtoCliente;
+import vs.spring_ionic.dto.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;
+import vs.spring_ionic.entidades.Endereco;
+import vs.spring_ionic.entidades.Municipio;
+import vs.spring_ionic.entidades.TipoCliente;
 import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
 import vs.spring_ionic.repositorios.RepositorioCliente;
+import vs.spring_ionic.repositorios.RepositorioEndereco;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,25 +25,28 @@ import java.util.Optional;
 public class ServicoCliente
 {
    @Autowired
-   private RepositorioCliente repositorio;
+   private RepositorioCliente repositorioCliente;
+
+   @Autowired
+   private RepositorioEndereco repositorioEndereco;
 
    public Cliente buscar(Integer id)
    {
-      Optional<Cliente> obj = repositorio.findById(id);
+      Optional<Cliente> obj = repositorioCliente.findById(id);
       return obj.orElseThrow(() -> new ExcecaoObjectNotFound
             ("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
    }
 
    public List<Cliente> buscarTudo()
    {
-      return repositorio.findAll();
+      return repositorioCliente.findAll();
    }
 
    public Page<Cliente> buscarPagina(Integer pagina, Integer linhasPorPagina,
                                        String direcao, String ordenadoPor)
    {
       PageRequest pageRequest = PageRequest.of(pagina, linhasPorPagina, Sort.Direction.valueOf(direcao), ordenadoPor);
-      return repositorio.findAll(pageRequest);
+      return repositorioCliente.findAll(pageRequest);
    }
 
    // Método auxiliar para converter um objeto DtoCliente
@@ -47,7 +56,47 @@ public class ServicoCliente
       return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
    }
 
-   // Incluir
+   // Método auxiliar sobrecarregado para converter um objeto DtoClienteNovo
+   // em um objeto Cliente
+   public Cliente origemDto(DtoClienteNovo objDto) {
+      Cliente cliente = new Cliente(null,
+            objDto.getNome(),
+            objDto.getEmail(),
+            objDto.getCpfCnpj(),
+            TipoCliente.converteParaEnum(objDto.getTipoCliente()));
+
+      Municipio municipio = new Municipio(objDto.getMunicipioId(),
+            null,
+            null);
+
+      Endereco end = new Endereco(null,
+            objDto.getLogradouro(),
+            objDto.getNumero(),
+            objDto.getComplemento(),
+            objDto.getBairro(),
+            objDto.getCep(),
+            cliente,
+            municipio);
+
+      cliente.getEnderecos().add(end);
+
+      cliente.getTelefones().add(objDto.getTelefone1());
+      if (objDto.getTelefone2()!=null) {
+         cliente.getTelefones().add(objDto.getTelefone2());
+      }
+      if (objDto.getTelefone3()!=null) {
+         cliente.getTelefones().add(objDto.getTelefone3());
+      }
+      return cliente;
+   }
+
+   @Transactional
+   public Cliente insert(Cliente obj) {
+      obj.setId(null);
+      obj = repositorioCliente.save(obj);
+      repositorioEndereco.saveAll(obj.getEnderecos());
+      return obj;
+   }
 
    // Método auxiliar para atualizar os dados de um novo objeto (novoObj)
    // buscado no BD, com base no objeto que veio como argumento (obj)
@@ -61,7 +110,7 @@ public class ServicoCliente
    {
       Cliente novoObj = buscar(obj.getId());
       atualizaDados(novoObj, obj);
-      return repositorio.save(novoObj);
+      return repositorioCliente.save(novoObj);
    }
 
    public void excluir(Integer id)
@@ -69,7 +118,7 @@ public class ServicoCliente
       buscar(id);
       try
       {
-         repositorio.deleteById(id);
+         repositorioCliente.deleteById(id);
       }
       catch (DataIntegrityViolationException e)
       {
