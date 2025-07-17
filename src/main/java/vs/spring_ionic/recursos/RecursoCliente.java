@@ -55,7 +55,7 @@ public class RecursoCliente
    @RequestMapping(method=RequestMethod.POST)
    public ResponseEntity<Void> incluir(@Valid @RequestBody DtoClienteNovo objDto) {
       Cliente obj = servico.origemDto(objDto);
-      obj = servico.insert(obj);
+      obj = servico.incluir(obj);
       URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}").buildAndExpand(obj.getId()).toUri();
       return ResponseEntity.created(uri).build();

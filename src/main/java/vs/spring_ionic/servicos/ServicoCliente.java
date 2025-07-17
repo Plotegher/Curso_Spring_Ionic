@@ -45,7 +45,10 @@ public class ServicoCliente
    public Page<Cliente> buscarPagina(Integer pagina, Integer linhasPorPagina,
                                        String direcao, String ordenadoPor)
    {
-      PageRequest pageRequest = PageRequest.of(pagina, linhasPorPagina, Sort.Direction.valueOf(direcao), ordenadoPor);
+      PageRequest pageRequest = PageRequest.of(pagina,
+            linhasPorPagina,
+            Sort.Direction.valueOf(direcao),
+            ordenadoPor);
       return repositorioCliente.findAll(pageRequest);
    }
 
@@ -58,7 +61,8 @@ public class ServicoCliente
 
    // Método auxiliar sobrecarregado para converter um objeto DtoClienteNovo
    // em um objeto Cliente
-   public Cliente origemDto(DtoClienteNovo objDto) {
+   public Cliente origemDto(DtoClienteNovo objDto)
+   {
       Cliente cliente = new Cliente(null,
             objDto.getNome(),
             objDto.getEmail(),
@@ -81,17 +85,20 @@ public class ServicoCliente
       cliente.getEnderecos().add(end);
 
       cliente.getTelefones().add(objDto.getTelefone1());
-      if (objDto.getTelefone2()!=null) {
+      if (objDto.getTelefone2()!=null)
+      {
          cliente.getTelefones().add(objDto.getTelefone2());
       }
-      if (objDto.getTelefone3()!=null) {
+      if (objDto.getTelefone3()!=null)
+      {
          cliente.getTelefones().add(objDto.getTelefone3());
       }
       return cliente;
    }
 
    @Transactional
-   public Cliente insert(Cliente obj) {
+   public Cliente incluir(Cliente obj)
+   {
       obj.setId(null);
       obj = repositorioCliente.save(obj);
       repositorioEndereco.saveAll(obj.getEnderecos());
