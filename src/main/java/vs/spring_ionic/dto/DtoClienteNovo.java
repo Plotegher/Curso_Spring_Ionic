@@ -1,20 +1,34 @@
 package vs.spring_ionic.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
+import vs.spring_ionic.servicos.IncluirCliente;
+
 import java.io.Serializable;
 
+@IncluirCliente
 public class DtoClienteNovo implements Serializable
 {
+   @NotEmpty(message = "Preenchimento obrigatório!")
+   @Length(min = 3, max = 120, message = "Nome entre 3 e 80 caracteres!")
    private String nome;
+   @NotEmpty(message = "Preenchimento obrigatório!")
+   @Email(message = "E-mail inválido!")
    private String email;
    private String cpfCnpj;
    private Integer tipoCliente;
 
+   @NotEmpty(message = "Preenchimento obrigatório!")
    private String logradouro;
+   @NotEmpty(message = "Preenchimento obrigatório!")
    private String numero;
    private String complemento;
    private String bairro;
+   @NotEmpty(message = "Preenchimento obrigatório!")
    private String cep;
 
+   @NotEmpty(message = "Preenchimento obrigatório!")
    private String telefone1;
    private String telefone2;
    private String telefone3;

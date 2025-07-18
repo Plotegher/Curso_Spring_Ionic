@@ -10,11 +10,11 @@ import java.io.Serializable;
 public class DtoCliente implements Serializable
 {
    private Integer id;
-   @NotEmpty(message = "Preenchimento obrigatório")
-   @Length(min = 3, max = 120, message = "Nome entre 3 e 80 caracteres")
+   @NotEmpty(message = "Preenchimento obrigatório!")
+   @Length(min = 3, max = 120, message = "Nome entre 3 e 80 caracteres!")
    private String nome;
-   @NotEmpty(message = "Preenchimento obrigatório")
-   @Email(message = "E-mail inválido")
+   @NotEmpty(message = "Preenchimento obrigatório!")
+   @Email(message = "E-mail inválido!")
    private String email;
 
    public DtoCliente() {}

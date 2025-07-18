@@ -15,12 +15,12 @@ public class CampoMensagem implements Serializable
       this.mensagem = mensagem;
    }
 
-   public String getNome()
+   public String getCampo()
    {
       return campo;
    }
 
-   public void setNome(String campo)
+   public void setCampo(String campo)
    {
       this.campo = campo;
    }
