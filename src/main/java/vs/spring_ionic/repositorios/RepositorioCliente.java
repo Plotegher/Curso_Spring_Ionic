@@ -8,6 +8,6 @@ import vs.spring_ionic.entidades.Cliente;
 @Repository
 public interface RepositorioCliente extends JpaRepository<Cliente, Integer>
 {
-   @Transactional//(readOnly = true)
+   @Transactional
    Cliente findByEmail(String email);
 }
