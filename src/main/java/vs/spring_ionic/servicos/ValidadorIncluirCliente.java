@@ -2,9 +2,12 @@ package vs.spring_ionic.servicos;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import vs.spring_ionic.dto.DtoClienteNovo;
+import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.entidades.TipoCliente;
 import vs.spring_ionic.excecoes.CampoMensagem;
+import vs.spring_ionic.repositorios.RepositorioCliente;
 import vs.spring_ionic.utilidades.ValidaCpfCnpj;
 
 import java.util.ArrayList;
@@ -12,6 +15,9 @@ import java.util.List;
 
 public class ValidadorIncluirCliente implements ConstraintValidator<IncluirCliente, DtoClienteNovo>
 {
+   @Autowired
+   private RepositorioCliente repositorio;
+
    @Override
    public void initialize(IncluirCliente incluirCliente) {}
 
@@ -30,6 +36,12 @@ public class ValidadorIncluirCliente implements ConstraintValidator<IncluirClien
             && !ValidaCpfCnpj.isValidCnpj(objDto.getCpfCnpj()))
       {
          lista.add(new CampoMensagem("cpfCnpj", "CNPJ inválido!"));
+      }
+
+      Cliente auxiliar = repositorio.findByEmail(objDto.getEmail());
+      if (auxiliar != null)
+      {
+         lista.add(new CampoMensagem("email", "E-mail já existente!"));
       }
 
       for (CampoMensagem c : lista)
