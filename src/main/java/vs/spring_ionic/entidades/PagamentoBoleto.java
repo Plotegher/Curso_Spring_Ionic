@@ -1,11 +1,13 @@
 package vs.spring_ionic.entidades;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import jakarta.persistence.Entity;
 
 import java.util.Date;
 
 @Entity
+@JsonTypeName("pagamentoBoleto")
 public class PagamentoBoleto extends Pagamento
 {
    @JsonFormat(pattern = "dd/MM/yyyy")
