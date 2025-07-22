@@ -9,8 +9,8 @@ import vs.spring_ionic.servicos.ServicoBD;
 import java.text.ParseException;
 
 @Configuration
-@Profile("teste")
-public class TesteConfiguracao
+@Profile("test")
+public class ConfiguracaoTest
 {
    @Autowired
    private ServicoBD servicoBD;
