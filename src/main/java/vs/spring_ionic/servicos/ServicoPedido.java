@@ -36,6 +36,9 @@ public class ServicoPedido
    @Autowired
    private ServicoCliente servicoCliente;
 
+   @Autowired
+   private ServicoEmail servicoEmail;
+
    public Pedido buscar(Integer id)
    {
       Optional<Pedido> obj = repositorioPedido.findById(id);
@@ -66,7 +69,7 @@ public class ServicoPedido
          item.setPedido(obj);
       }
       repositorioItemPedido.saveAll(obj.getItens());
-      System.out.println(obj);
+      servicoEmail.enviarConfirmacaoPedido(obj);
       return obj;
    }
 }
