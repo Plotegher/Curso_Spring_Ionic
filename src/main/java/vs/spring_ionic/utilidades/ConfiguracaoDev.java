@@ -16,7 +16,7 @@ public class ConfiguracaoDev
    @Autowired
    private ServicoBD servicoBD;
 
-   @Value("S{spring.jpa.hibernate.ddl-auto}")
+   @Value("${spring.jpa.hibernate.ddl-auto}")
    private String estrategia;
 
    @Bean

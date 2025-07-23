@@ -5,6 +5,8 @@ import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 @Entity
@@ -106,5 +108,22 @@ public class ItemPedido implements Serializable
    public int hashCode()
    {
       return Objects.hashCode(id);
+   }
+
+   @Override
+   public String toString()
+   {
+      NumberFormat nft = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+      final StringBuilder sbd = new StringBuilder("Item [");
+      sbd.append(getProduto().getNome());
+      sbd.append(", Quantidade = ");
+      sbd.append(getQuantidade());
+      sbd.append(", Preço = ");
+      sbd.append(nft.format(getPreco()));
+      sbd.append(", Sub-total = ");
+      sbd.append(nft.format(getSubTotal()));
+      sbd.append(']');
+      sbd.append("\n");
+      return sbd.toString();
    }
 }
