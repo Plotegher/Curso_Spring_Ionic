@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import vs.spring_ionic.servicos.ServicoBD;
+import vs.spring_ionic.servicos.ServicoEmail;
+import vs.spring_ionic.servicos.ServicoEmailSmtp;
 
 import java.text.ParseException;
 
@@ -28,5 +30,11 @@ public class ConfiguracaoDev
       }
       servicoBD.testeInstanciacaoBD();
       return true;
+   }
+
+   @Bean
+   public ServicoEmail servicoEmail()
+   {
+      return new ServicoEmailSmtp();
    }
 }

@@ -89,7 +89,7 @@ public class ServicoBD
       repositorioEstado.saveAll(Arrays.asList(est1, est2));
       repositorioMunicipio.saveAll(Arrays.asList(mun1, mun2, mun3));
 
-      Cliente cli1 = new Cliente(null, "Maria Silva", "maria@email.com",
+      Cliente cli1 = new Cliente(null, "Maria Silva", "herhos@gmail.com",
             "123.456.789-10", TipoCliente.FISICA);
 
       cli1.getTelefones().addAll(Arrays.asList("98765-4321", "99887-7665"));
