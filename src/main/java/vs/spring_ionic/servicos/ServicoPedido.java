@@ -69,7 +69,7 @@ public class ServicoPedido
          item.setPedido(obj);
       }
       repositorioItemPedido.saveAll(obj.getItens());
-      servicoEmail.enviarConfirmacaoPedido(obj);
+      servicoEmail.enviarConfirmacaoPedidoHtml(obj);
       return obj;
    }
 }

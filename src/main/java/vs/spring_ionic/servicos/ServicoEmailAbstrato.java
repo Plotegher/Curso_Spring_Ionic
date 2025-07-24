@@ -1,7 +1,14 @@
 package vs.spring_ionic.servicos;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 import vs.spring_ionic.entidades.Pedido;
 
 import java.util.Date;
@@ -11,14 +18,33 @@ public abstract class ServicoEmailAbstrato implements ServicoEmail
    @Value("${default.sender}")
    private String sender;
 
+   @Autowired
+   private TemplateEngine templateEngine;
+
+   @Autowired
+   private JavaMailSender javaMailSender;
+
    @Override
-   public void enviarConfirmacaoPedido(Pedido obj)
+   public void enviarConfirmacaoPedidoTexto(Pedido obj)
    {
-      SimpleMailMessage smm = preparaMensagemCorreioPedido(obj);
-      enviarEmail(smm);
+      SimpleMailMessage simpleMailMessage = preparaMensagemPedidoTexto(obj);
+      enviarEmailTexto(simpleMailMessage);
    }
 
-   protected SimpleMailMessage preparaMensagemCorreioPedido(Pedido obj)
+   public void enviarConfirmacaoPedidoHtml(Pedido obj)
+   {
+      try
+      {
+         MimeMessage mimeMessage = preparaMensagemPedidoHtml(obj);
+         enviarEmailHtml(mimeMessage);
+      }
+      catch (MessagingException e)
+      {
+         enviarConfirmacaoPedidoTexto(obj);
+      }
+   }
+
+   protected SimpleMailMessage preparaMensagemPedidoTexto(Pedido obj)
    {
       SimpleMailMessage smm = new SimpleMailMessage();
       smm.setTo(obj.getCliente().getEmail());
@@ -27,5 +53,24 @@ public abstract class ServicoEmailAbstrato implements ServicoEmail
       smm.setSentDate(new Date(System.currentTimeMillis()));
       smm.setText(obj.toString());
       return smm;
+   }
+
+   protected MimeMessage preparaMensagemPedidoHtml(Pedido obj) throws MessagingException
+   {
+      MimeMessage mmm = javaMailSender.createMimeMessage();
+      MimeMessageHelper mmh = new MimeMessageHelper(mmm ,true);
+      mmh.setTo(obj.getCliente().getEmail());
+      mmh.setFrom(sender);
+      mmh.setSubject("Pedido " + obj.getId() + " confirmado!");
+      mmh.setSentDate(new Date(System.currentTimeMillis()));
+      mmh.setText(htmlPedidoModelo(obj), true);
+      return mmh.getMimeMessage(); // adicionei .getMimeMessage()
+   }
+
+   protected String htmlPedidoModelo(Pedido obj)
+   {
+      Context contexto = new Context();
+      contexto.setVariable("pedido", obj);
+      return templateEngine.process("email/confirmacaoPedido", contexto);
    }
 }
