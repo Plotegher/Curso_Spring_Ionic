@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 public class Cliente implements Serializable
@@ -35,11 +36,18 @@ public class Cliente implements Serializable
    @CollectionTable(name = "TELEFONE")
    private Set<String> telefones = new HashSet<>();
 
+   @ElementCollection(fetch = FetchType.EAGER)
+   @CollectionTable(name = "PERFIL")
+   private Set<Integer> perfis = new HashSet<>();
+
    @JsonIgnore // Os pedidos de um cliente não serão serializados
    @OneToMany(mappedBy = "cliente")
    private List<Pedido> pedidos = new ArrayList<>();
 
-   public Cliente() {}
+   public Cliente()
+   {
+      adicionaPerfil(Perfil.CLIENTE);
+   }
 
    public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoCliente, String senha)
    {
@@ -50,6 +58,7 @@ public class Cliente implements Serializable
       // Modificado para receber um Integer
       this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCodigo();
       this.senha = senha;
+      adicionaPerfil(Perfil.CLIENTE);
    }
 
    public Integer getId()
@@ -132,6 +141,16 @@ public class Cliente implements Serializable
    public void setTelefones(Set<String> telefones)
    {
       this.telefones = telefones;
+   }
+
+   public Set<Perfil> getPerfis()
+   {
+      return perfis.stream().map(Perfil::converteParaEnum).collect(Collectors.toSet());
+   }
+
+   public void adicionaPerfil(Perfil perfil)
+   {
+      perfis.add(perfil.getCodigo());
    }
 
    public List<Pedido> getPedidos()

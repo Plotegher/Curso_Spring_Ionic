@@ -93,19 +93,26 @@ public class ServicoBD
       repositorioMunicipio.saveAll(Arrays.asList(mun1, mun2, mun3));
 
       Cliente cli1 = new Cliente(null, "Maria Silva", "herhos@gmail.com",
-            "123.456.789-10", TipoCliente.FISICA, bCryptPasswordEncoder.encode("123"));
+            "63181417076", TipoCliente.FISICA, bCryptPasswordEncoder.encode("123"));
+      cli1.getTelefones().addAll(Arrays.asList("98765-4321", "98877-6655"));
 
-      cli1.getTelefones().addAll(Arrays.asList("98765-4321", "99887-7665"));
+      Cliente cli2 = new Cliente(null, "Ana Costa", "herhos@outlook.com",
+            "48446108054", TipoCliente.FISICA, bCryptPasswordEncoder.encode("456"));
+      cli2.getTelefones().addAll(Arrays.asList("91234-5678", "94433-2211"));
+      cli2.adicionaPerfil(Perfil.ADMIN);
 
       Endereco end1 = new Endereco(null, "Rua Flores", "300", "AP 203",
             "Floresta", "38.204-054", cli1, mun1);
       Endereco end2 = new Endereco(null, "Avenida Matos", "105", "Sala 801",
             "Centro", "29.050-002", cli1, mun2);
+      Endereco end3 = new Endereco(null, "Avenida Hugo Musso", "2106", "Casa",
+            "Itapuã", "29.180-700", cli2, mun3);
 
       cli1.getEnderecos().addAll(Arrays.asList(end1, end2));
+      cli2.getEnderecos().addAll(Arrays.asList(end3));
 
-      repositorioCliente.saveAll(Arrays.asList(cli1));
-      repositorioEndereco.saveAll(Arrays.asList(end1, end2));
+      repositorioCliente.saveAll(Arrays.asList(cli1, cli2));
+      repositorioEndereco.saveAll(Arrays.asList(end1, end2, end3));
 
       SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
