@@ -1,4 +1,4 @@
-package vs.spring_ionic.dto;
+package vs.spring_ionic.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;

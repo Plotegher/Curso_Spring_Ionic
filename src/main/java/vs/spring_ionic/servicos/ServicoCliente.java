@@ -6,9 +6,10 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import vs.spring_ionic.dto.DtoCliente;
-import vs.spring_ionic.dto.DtoClienteNovo;
+import vs.spring_ionic.dtos.DtoCliente;
+import vs.spring_ionic.dtos.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.entidades.Endereco;
 import vs.spring_ionic.entidades.Municipio;
@@ -29,6 +30,9 @@ public class ServicoCliente
 
    @Autowired
    private RepositorioEndereco repositorioEndereco;
+
+   @Autowired
+   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
    public Cliente buscar(Integer id)
    {
@@ -56,7 +60,7 @@ public class ServicoCliente
    // em um objeto Cliente
    public Cliente origemDto(DtoCliente objDto)
    {
-      return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null);
+      return new Cliente(objDto.getId(), objDto.getNome(), objDto.getEmail(), null, null, null);
    }
 
    // Método auxiliar sobrecarregado para converter um objeto DtoClienteNovo
@@ -67,7 +71,8 @@ public class ServicoCliente
             objDto.getNome(),
             objDto.getEmail(),
             objDto.getCpfCnpj(),
-            TipoCliente.converteParaEnum(objDto.getTipoCliente()));
+            TipoCliente.converteParaEnum(objDto.getTipoCliente()),
+            bCryptPasswordEncoder.encode(objDto.getSenha()));
 
       Municipio municipio = new Municipio(objDto.getMunicipioId(),
             null,

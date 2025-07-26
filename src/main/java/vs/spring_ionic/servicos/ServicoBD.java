@@ -1,6 +1,7 @@
 package vs.spring_ionic.servicos;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vs.spring_ionic.entidades.*;
 import vs.spring_ionic.repositorios.*;
@@ -30,6 +31,8 @@ public class ServicoBD
    private RepositorioPagamento repositorioPagamento;
    @Autowired
    private RepositorioItemPedido repositorioItemPedido;
+   @Autowired
+   private BCryptPasswordEncoder bCryptPasswordEncoder;
 
    public void testeInstanciacaoBD() throws ParseException
    {
@@ -90,7 +93,7 @@ public class ServicoBD
       repositorioMunicipio.saveAll(Arrays.asList(mun1, mun2, mun3));
 
       Cliente cli1 = new Cliente(null, "Maria Silva", "herhos@gmail.com",
-            "123.456.789-10", TipoCliente.FISICA);
+            "123.456.789-10", TipoCliente.FISICA, bCryptPasswordEncoder.encode("123"));
 
       cli1.getTelefones().addAll(Arrays.asList("98765-4321", "99887-7665"));
 

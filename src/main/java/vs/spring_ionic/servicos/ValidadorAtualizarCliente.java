@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
-import vs.spring_ionic.dto.DtoCliente;
+import vs.spring_ionic.dtos.DtoCliente;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.excecoes.CampoMensagem;
 import vs.spring_ionic.repositorios.RepositorioCliente;

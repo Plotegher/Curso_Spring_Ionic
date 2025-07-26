@@ -3,7 +3,7 @@ package vs.spring_ionic.servicos;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import vs.spring_ionic.dto.DtoClienteNovo;
+import vs.spring_ionic.dtos.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.entidades.TipoCliente;
 import vs.spring_ionic.excecoes.CampoMensagem;

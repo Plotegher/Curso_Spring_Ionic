@@ -1,4 +1,4 @@
-package vs.spring_ionic.dto;
+package vs.spring_ionic.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

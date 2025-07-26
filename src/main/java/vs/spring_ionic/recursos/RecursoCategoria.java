@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import vs.spring_ionic.dto.DtoCategoria;
+import vs.spring_ionic.dtos.DtoCategoria;
 import vs.spring_ionic.entidades.Categoria;
 import vs.spring_ionic.servicos.ServicoCategoria;
 

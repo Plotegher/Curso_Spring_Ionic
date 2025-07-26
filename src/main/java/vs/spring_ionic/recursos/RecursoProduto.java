@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import vs.spring_ionic.dto.DtoProduto;
+import vs.spring_ionic.dtos.DtoProduto;
 import vs.spring_ionic.entidades.Produto;
 import vs.spring_ionic.servicos.ServicoProduto;
 

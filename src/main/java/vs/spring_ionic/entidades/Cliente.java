@@ -12,13 +12,20 @@ public class Cliente implements Serializable
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Integer id;
+
    private String nome;
+
    @Column(unique = true)
    private String email;
+
    private String cpfCnpj;
+
    // Internamente a variável tipoCliente armazena um número inteiro,
    // mas externamente, para o sistema ela expõem o objeto TipoCliente.
    private Integer tipoCliente;
+
+   @JsonIgnore
+   private String senha;
 
    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
    private List<Endereco> enderecos = new ArrayList<>();
@@ -34,7 +41,7 @@ public class Cliente implements Serializable
 
    public Cliente() {}
 
-   public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoCliente)
+   public Cliente(Integer id, String nome, String email, String cpfCnpj, TipoCliente tipoCliente, String senha)
    {
       this.id = id;
       this.nome = nome;
@@ -42,6 +49,7 @@ public class Cliente implements Serializable
       this.cpfCnpj = cpfCnpj;
       // Modificado para receber um Integer
       this.tipoCliente = (tipoCliente == null) ? null : tipoCliente.getCodigo();
+      this.senha = senha;
    }
 
    public Integer getId()
@@ -94,6 +102,16 @@ public class Cliente implements Serializable
    {
       // Modificado para receber um Integer
       this.tipoCliente = tipoCliente.getCodigo();
+   }
+
+   public String getSenha()
+   {
+      return senha;
+   }
+
+   public void setSenha(String senha)
+   {
+      this.senha = senha;
    }
 
    public List<Endereco> getEnderecos()

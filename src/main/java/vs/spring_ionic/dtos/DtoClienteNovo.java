@@ -1,4 +1,4 @@
-package vs.spring_ionic.dto;
+package vs.spring_ionic.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,6 +18,8 @@ public class DtoClienteNovo implements Serializable
    private String email;
    private String cpfCnpj;
    private Integer tipoCliente;
+   @NotEmpty(message = "Preenchimento obrigatório!")
+   private String senha;
 
    @NotEmpty(message = "Preenchimento obrigatório!")
    private String logradouro;
@@ -75,6 +77,16 @@ public class DtoClienteNovo implements Serializable
    public void setTipoCliente(Integer tipoCliente)
    {
       this.tipoCliente = tipoCliente;
+   }
+
+   public String getSenha()
+   {
+      return senha;
+   }
+
+   public void setSenha(String senha)
+   {
+      this.senha = senha;
    }
 
    public String getLogradouro()

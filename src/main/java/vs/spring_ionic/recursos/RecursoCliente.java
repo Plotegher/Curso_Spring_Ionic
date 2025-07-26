@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import vs.spring_ionic.dto.DtoCliente;
-import vs.spring_ionic.dto.DtoClienteNovo;
+import vs.spring_ionic.dtos.DtoCliente;
+import vs.spring_ionic.dtos.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.servicos.ServicoCliente;
 
