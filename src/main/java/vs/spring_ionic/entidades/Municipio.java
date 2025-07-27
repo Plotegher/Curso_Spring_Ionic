@@ -1,6 +1,6 @@
 package vs.spring_ionic.entidades;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;

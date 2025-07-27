@@ -1,6 +1,6 @@
 package vs.spring_ionic.servicos;
 
-import jakarta.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage;
 import org.springframework.mail.SimpleMailMessage;
 import vs.spring_ionic.entidades.Pedido;
 

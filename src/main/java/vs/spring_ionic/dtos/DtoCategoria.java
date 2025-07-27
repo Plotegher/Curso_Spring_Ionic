@@ -1,6 +1,6 @@
 package vs.spring_ionic.dtos;
 
-import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import vs.spring_ionic.entidades.Categoria;
 

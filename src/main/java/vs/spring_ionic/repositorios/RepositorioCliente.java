@@ -1,6 +1,6 @@
 package vs.spring_ionic.repositorios;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import vs.spring_ionic.entidades.Cliente;

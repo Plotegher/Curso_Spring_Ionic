@@ -1,7 +1,7 @@
 package vs.spring_ionic.servicos;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import vs.spring_ionic.dtos.DtoClienteNovo;
 import vs.spring_ionic.entidades.Cliente;

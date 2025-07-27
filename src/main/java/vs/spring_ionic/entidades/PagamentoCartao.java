@@ -1,7 +1,7 @@
 package vs.spring_ionic.entidades;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import jakarta.persistence.Entity;
+import javax.persistence.Entity;
 
 @Entity
 @JsonTypeName("pagamentoCartao")

@@ -1,7 +1,7 @@
 package vs.spring_ionic.entidades;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.*;

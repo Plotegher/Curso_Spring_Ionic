@@ -1,7 +1,7 @@
 package vs.spring_ionic.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.servicos.AtualizarCliente;
