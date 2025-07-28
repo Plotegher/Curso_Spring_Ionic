@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vs.spring_ionic.dtos.DtoCategoria;
@@ -51,6 +52,7 @@ public class RecursoCategoria
    }
 
    // Incluir uma categoria
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(method = RequestMethod.POST)
    public ResponseEntity<Void> incluir(@Valid @RequestBody DtoCategoria objDto)
    {
@@ -62,6 +64,7 @@ public class RecursoCategoria
    }
 
    // Atualizar uma categoria
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
    public ResponseEntity<Void> atualizar(@Valid @RequestBody DtoCategoria objDto, @PathVariable Integer id)
    {
@@ -72,6 +75,7 @@ public class RecursoCategoria
    }
 
    // Excluir uma categoria
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
    public ResponseEntity<Void> excluir(@PathVariable Integer id)
    {

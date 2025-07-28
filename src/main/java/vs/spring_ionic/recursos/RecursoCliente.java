@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import vs.spring_ionic.dtos.DtoCliente;
@@ -30,6 +31,7 @@ public class RecursoCliente
    }
 
    // Buscar todos os clientes
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(method = RequestMethod.GET)
    public ResponseEntity<List<DtoCliente>> buscarTudo()
    {
@@ -39,6 +41,7 @@ public class RecursoCliente
    }
 
    // Buscar clientes por página
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(value = "/pagina", method = RequestMethod.GET)
    public ResponseEntity<Page<DtoCliente>> buscarPagina
    (@RequestParam(value = "pagina", defaultValue = "0") Integer pagina,
@@ -72,6 +75,7 @@ public class RecursoCliente
    }
 
    // Excluir um cliente
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
    public ResponseEntity<Void> excluir(@PathVariable Integer id)
    {
