@@ -10,14 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import vs.spring_ionic.dtos.DtoCliente;
 import vs.spring_ionic.dtos.DtoClienteNovo;
-import vs.spring_ionic.entidades.Cliente;
-import vs.spring_ionic.entidades.Endereco;
-import vs.spring_ionic.entidades.Municipio;
-import vs.spring_ionic.entidades.TipoCliente;
+import vs.spring_ionic.entidades.*;
+import vs.spring_ionic.excecoes.ExcecaoAuthorization;
 import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
 import vs.spring_ionic.repositorios.RepositorioCliente;
 import vs.spring_ionic.repositorios.RepositorioEndereco;
+import vs.spring_ionic.utilidades.UsuarioSpringSecurity;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +35,12 @@ public class ServicoCliente
 
    public Cliente buscar(Integer id)
    {
+      UsuarioSpringSecurity usuario = ServicoUsuario.autenticado();
+      if (usuario == null || !usuario.hasRole(Perfil.ADMIN) && !id.equals(usuario.getId()))
+      {
+         throw  new ExcecaoAuthorization("Acesso negado!");
+      }
+
       Optional<Cliente> obj = repositorioCliente.findById(id);
       return obj.orElseThrow(() -> new ExcecaoObjectNotFound
             ("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));

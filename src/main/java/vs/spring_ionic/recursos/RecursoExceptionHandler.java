@@ -7,10 +7,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import vs.spring_ionic.excecoes.ErroPadrao;
-import vs.spring_ionic.excecoes.ErroValidacao;
-import vs.spring_ionic.excecoes.ExcecaoDataIntegrity;
-import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
+import vs.spring_ionic.excecoes.*;
 
 @ControllerAdvice
 public class RecursoExceptionHandler
@@ -42,5 +39,13 @@ public class RecursoExceptionHandler
          erro.adicionaErro(e.getField(), e.getDefaultMessage());
       }
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+   }
+
+   @ExceptionHandler(ExcecaoAuthorization.class)
+   public ResponseEntity<ErroPadrao> authorization(ExcecaoAuthorization excecao, HttpServletRequest request)
+   {
+      ErroPadrao erro = new ErroPadrao(HttpStatus.FORBIDDEN.value(), excecao.getMessage(),
+            System.currentTimeMillis());
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
    }
 }
