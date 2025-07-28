@@ -54,6 +54,7 @@ public class ConfiguracaoSeguranca extends WebSecurityConfigurerAdapter
             .anyRequest()
             .authenticated();
       http.addFilter(new JwtFiltroAutenticacao(authenticationManager(), jwtUtil));
+      http.addFilter(new JwtFiltroAutorizacao(authenticationManager(), jwtUtil, servicoDetalhesUsuario));
       http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
    }
 
