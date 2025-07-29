@@ -2,15 +2,17 @@ package vs.spring_ionic.servicos;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import vs.spring_ionic.entidades.EstadoPagamento;
-import vs.spring_ionic.entidades.ItemPedido;
-import vs.spring_ionic.entidades.PagamentoBoleto;
-import vs.spring_ionic.entidades.Pedido;
+import vs.spring_ionic.entidades.*;
+import vs.spring_ionic.excecoes.ExcecaoAuthorization;
 import vs.spring_ionic.excecoes.ExcecaoObjectNotFound;
 import vs.spring_ionic.repositorios.RepositorioItemPedido;
 import vs.spring_ionic.repositorios.RepositorioPagamento;
 import vs.spring_ionic.repositorios.RepositorioPedido;
+import vs.spring_ionic.utilidades.UsuarioSpringSecurity;
 
 import java.util.Date;
 import java.util.Optional;
@@ -71,5 +73,21 @@ public class ServicoPedido
       repositorioItemPedido.saveAll(obj.getItens());
       servicoEmail.enviarConfirmacaoPedidoHtml(obj);
       return obj;
+   }
+
+   public Page<Pedido> buscarPagina(Integer pagina, Integer linhasPorPagina,
+         String direcao, String ordenadoPor)
+   {
+      UsuarioSpringSecurity usuarioSS = ServicoUsuario.autenticado();
+      if (usuarioSS == null)
+      {
+         throw new ExcecaoAuthorization("Acesso negado!");
+      }
+      PageRequest pageRequest = PageRequest.of(pagina,
+            linhasPorPagina,
+            Sort.Direction.valueOf(direcao),
+            ordenadoPor);
+      Cliente cliente = servicoCliente.buscar(usuarioSS.getId());
+      return repositorioPedido.findByCliente(cliente, pageRequest);
    }
 }
