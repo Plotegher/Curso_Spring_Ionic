@@ -9,6 +9,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.entidades.Pedido;
 
 import java.util.Date;
@@ -72,5 +73,23 @@ public abstract class ServicoEmailAbstrato implements ServicoEmail
       Context contexto = new Context();
       contexto.setVariable("pedido", obj);
       return templateEngine.process("email/confirmacaoPedido", contexto);
+   }
+
+   @Override
+   public void enviarEmailNovaSenha(Cliente cliente, String novaSenha)
+   {
+      SimpleMailMessage smm = preparaEmailNovaSenha(cliente, novaSenha);
+      enviarEmailTexto(smm);
+   }
+
+   protected SimpleMailMessage preparaEmailNovaSenha(Cliente cliente, String novaSenha)
+   {
+      SimpleMailMessage smm = new SimpleMailMessage();
+      smm.setTo(cliente.getEmail());
+      smm.setFrom(sender);
+      smm.setSubject("Solicitação de nova senha!");
+      smm.setSentDate(new Date(System.currentTimeMillis()));
+      smm.setText("Nova senha: " + novaSenha);
+      return smm;
    }
 }

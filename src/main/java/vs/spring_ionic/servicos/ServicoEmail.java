@@ -2,6 +2,7 @@ package vs.spring_ionic.servicos;
 
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.SimpleMailMessage;
+import vs.spring_ionic.entidades.Cliente;
 import vs.spring_ionic.entidades.Pedido;
 
 public interface ServicoEmail
@@ -13,4 +14,6 @@ public interface ServicoEmail
    // Métodos para enviar e-mails no modo html
    void enviarConfirmacaoPedidoHtml(Pedido obj);
    void enviarEmailHtml(MimeMessage msg);
+
+   void enviarEmailNovaSenha(Cliente cliente, String novaSenha);
 }
